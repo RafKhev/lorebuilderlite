@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
-#define MAX_PROJ 2
+#define MAX_PROJ 1
 int main(){
 	setlocale(LC_ALL, "");
 	
@@ -11,34 +11,34 @@ int main(){
 	int quant_projetos = 0;
 	
 	
-	//DefiniÁ„o de quantides por projetos
+	//DefiniÔøΩÔøΩo de quantides por projetos
 	char projetos[MAX_PROJ][30] = {0};
 	int max_personagens = 10,
 		max_locais = 3,
 		max_objetos = 3;
 	
-	//Vari·veis de personagens [No do projeto][No. do personagem][Tamanho]
+	//VariÔøΩveis de personagens [No do projeto][No. do personagem][Tamanho]
 	int quant_personagens[MAX_PROJ] = {0};
 	char nome_personagem[MAX_PROJ][max_personagens][30];
 	char descricao_personagem[MAX_PROJ][max_personagens][300];
 	
-	//Vari·veis de mundo
+	//VariÔøΩveis de mundo
 	char nome_mundo[MAX_PROJ][max_personagens][30];
 	char descricao_mundo[MAX_PROJ][max_personagens][300];
 	
-	//Vari·veis de local
+	//Vari√°veis de local
 	int quant_locais[MAX_PROJ] = {0};
 	char nome_local[MAX_PROJ][max_personagens][30];
 	char descricao_local[MAX_PROJ][max_personagens][300];
 	
-	//Vari·veis de objetos importantes
+	//Vari√°veis de objetos importantes
 	int quant_objetos[MAX_PROJ] = {0};
 	char nome_objeto[MAX_PROJ][max_personagens][30];
 	char descricao_objeto[MAX_PROJ][max_personagens][300];
 	
 	do{
 		system("cls");
-		printf( "Escolha uma opÁ„o: \n"
+		printf( "Escolha uma op√ß√£o: \n"
 				"1 - Criar projeto\n"
 				"2 - Editar projeto\n"
 				"3 - Ver projeto\n"
@@ -59,7 +59,7 @@ int main(){
 				int criando = 1;
 				do{
 					
-					printf("Escolha uma opÁ„o:\n"
+					printf("Escolha uma op√ß√£o:\n"
 						   "1 - Criar personagem\n"
 						   "2 - Criar local\n"
 						   "3 - Criar objeto importante\n"
@@ -71,51 +71,51 @@ int main(){
 						case 1:
 							quant_personagens[quant_projetos]++;
 							if(quant_personagens[quant_projetos] > max_personagens){
-								printf("M¡XIMO DE PERSONAGENS EXCEDIDO");
+								printf("M√ÅXIMO DE PERSONAGENS EXCEDIDO");
 								break;
 							}
 							
 							printf("<>CRIANDO PERSONAGEM %d<>\nInsira o nome do personagem: ", quant_personagens);
 							gets(nome_personagem[quant_projetos][quant_personagens]);
-							printf("\nInsira a descriÁ„o do personagem: \n");
+							printf("\nInsira a descri√ß√£o do personagem: \n");
 							gets(descricao_personagem[quant_projetos][quant_personagens]);
 							break;
 						case 2:
 							quant_locais[quant_projetos]++
 							if(quant_locais[quant_projetos] > max_locais){
-								printf("M¡XIMO DE PERSONAGENS EXCEDIDO");
+								printf("MÔøΩXIMO DE PERSONAGENS EXCEDIDO");
 								break;
 							}
 							
 							printf("<>CRIANDO LOCAL %d<>\nInsira o nome do local: ", quant_locais);
 							gets(nome_personagem[quant_projetos][quant_locais]);
-							printf("\nInsira a descriÁ„o do local: \n");
+							printf("\nInsira a descri√ß√£o do local: \n");
 							gets(descricao_personagem[quant_projetos][quant_locais])
 							break;
 						case 3:
 							quant_objetos[quant_projetos]++
 							if(quant_personagens[quant_projetos] > max_objetos){
-								printf("M¡XIMO DE objeto EXCEDIDO");
+								printf("MÔøΩXIMO DE objeto EXCEDIDO");
 								break;
 							}
 							
 							printf("<>CRIANDO OBJETO %d<>\nInsira o nome do objeto: ", quant_objetos);
 							gets(nome_personagem[quant_projetos][quant_objetos]);
-							printf("\nInsira a descriÁ„o do personagem: \n");
+							printf("\nInsira a descri√ß√£o do personagem: \n");
 							gets(descricao_personagem[quant_projetos][quant_objetos])
 							break;
 						default: 
 							criando = 0;
 							break;
 					}
-				}//Fim criaÁ„o 	
+				}//Fim criaÔøΩÔøΩo 	
 				//-------------------------------------------//
 				break;
 			case 2:
 				//printf("%s, %s\n", personagem_1_nome, personagem_1_apelido);
 				break;
 			case 3: 
-				printf("****Em construÁ„o****\n\n");
+				printf("****Em construÔøΩÔøΩo****\n\n");
 				break;
 			case 0:
 			default:
