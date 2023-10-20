@@ -12,11 +12,14 @@ int main(){
 
 	// Defini��o de quantides por projetos
 	char nome_projeto[30];
-	// Vari�veis de personagens [No do projeto][No. do personagem][Tamanho]
+	// Vari�veis de personagens [No. do personagem][Tamanho]
 	int quant_personagens = 10;
+	int quant_personagens_usados = 0;
 	char nome_personagem[quant_personagens][30];
 	char descricao_personagem[quant_personagens][300];
-
+	memset(nome_personagem, 0, quant_personagens*30*sizeof(char));
+	memset(descricao_personagem, 0, quant_personagens*300*sizeof(char));
+	
 	// Vari�veis de mundo
 	int quant_mundo = 3;
 	char nome_mundo[quant_mundo][30];
@@ -77,29 +80,50 @@ int main(){
 						int index_edit;
 
 						for(int i = 0;i < quant_personagens;i++){
-							if(strlen(nome_personagem[i][0]) == 0){
+							if(nome_personagem[i][0] == NULL){
 								index_edit = i;
 							}else{
 								index_edit = quant_personagens;
 							}
 						}
-						printf("Criando personagem #%d\nInsira um nome:", index_edit+1);
+						printf("Criando personagem #%d\nInsira um nome:", index_edit);
 						gets(nome_personagem[index_edit]);
 						fflush(stdin);
 						printf("Insira a descrição: \n");
 						gets(descricao_personagem[index_edit]);
 						fflush(stdin);
 
+						printf("--------------------------\n");
 						printf("%s\n", nome_personagem[index_edit]);
 						printf("--------------------------\n");
 						printf("%s\n", descricao_personagem[index_edit]);
 						printf("Digite qualquer tecla para continuar...");
+						quant_personagens_usados++;
 						getch();
-						break;
 						system("cls");
+						continue;
 					}
 					else if(op_char == 2){
-						//ver
+						if (quant_personagens_usados == 0)
+						{
+							printf("Não há personagens cadastrados!");
+							getch();
+							system("cls");
+							continue;
+						}
+						
+						for(int i=0;i<quant_personagens;i++){
+							if(nome_personagem[i][0] != NULL){
+								printf("-------------------------\n"
+									   "\t%s\t\t\n"
+									   "-------------------------\n"
+									   "%s\n",
+									   nome_personagem[i], descricao_personagem[i]);
+							}
+						}
+						printf("Digite qualquer tecla para continuar...\n");
+						getch();
+						system("cls");
 					}
 					else if(op_char == 3){
 						//editar
