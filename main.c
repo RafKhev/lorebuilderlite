@@ -26,7 +26,6 @@ int main()
 
 	Projeto projeto_aberto;
 	
-
 	do{
 		printf(" _     ___  ____  _____ ____  _   _ ___ _     ____  _____ ____\n| |   / _ \\|  _ \\| ____| __ )| | | |_ _| |   |  _ \\| ____|  _ \\\n| |  | | | | |_) |  _| |  _ \\| | | || || |   | | | |  _| | |_) |\n| |__| |_| |  _ <| |___| |_) | |_| || || |___| |_| | |___|  _ <\n|_____\\___/|_| \\_\\_____|____/ \\___/|___|_____|____/|_____|_| \\_\\|");
                                                               
@@ -46,6 +45,7 @@ int main()
                 break;
             case 2:
                 projeto_aberto = carregar_projeto(projetos, quant_projetos);
+				menu_projeto(&projeto_aberto);
                 break;
             default: 
 			rodando = 0;

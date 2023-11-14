@@ -74,7 +74,10 @@ Projeto carregar_projeto(char projetos[][MAX_NOME_PASTA], int quant_projetos){
 //     MENUS
 //----------------------------
 
-void menu_projeto(){
+void menu_projeto(Projeto *proj){
+    printf("Menu de projetos...");
+    getch();
+    sys("cls");
     //Ir para menu de personagem/menu de mundo/retornar
 }  
 
