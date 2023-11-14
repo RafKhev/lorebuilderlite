@@ -1,3 +1,6 @@
+#ifndef STRUCT_H_INCLUDED
+#define STRUCT_H_INCLUDED
+
 typedef struct _obj {
     char nome[30];
     char desc[400];
@@ -26,3 +29,5 @@ typedef struct _projeto {
     Personagem personagens;
     Mundo mundos;
 }Projeto;
+
+#endif

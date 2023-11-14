@@ -7,6 +7,11 @@
 #include "func.h"
 #include "struct.h"
 
+#define MAX_PROJETOS 50
+#define MAX_NOME_PASTA 256
+
+void listar_projetos(char projetos[][MAX_NOME_PASTA], int *quant_projetos);
+
 int main()
 {
 	setlocale(LC_ALL, "Portuguese");
@@ -16,35 +21,20 @@ int main()
 
 	// Defini��o de quantides por projetos
 	char nome_projeto[30];
+	char projetos[MAX_PROJETOS][MAX_NOME_PASTA];
+	int quant_projetos = 0;
 
+	Projeto projeto_aberto;
 	
 
-	/*****************************************/
-	//			ESTRUTURA PRINCIPAL
-	/*****************************************/
-	//printf("Digite o nome do projeto: ");
-	//scanf("%s", &nome_projeto);
 	do{
-
-		/*
-		printf("▄█        ▄██████▄     ▄████████    ▄████████ ▀█████████▄  ███    █▄   ▄█   ▄█       ████████▄     ▄████████    ▄████████  "
-			   "███       ███    ███   ███    ███   ███    ███   ███    ███ ███    ███ ███  ███       ███   ▀███   ███    ███   ███    ███ "
-			   "███       ███    ███   ███    ███   ███    █▀    ███    ███ ███    ███ ███▌ ███       ███    ███   ███    █▀    ███    ███ "
-			   "███       ███    ███  ▄███▄▄▄▄██▀  ▄███▄▄▄      ▄███▄▄▄██▀  ███    ███ ███▌ ███       ███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀ "
-			   "███       ███    ███ ▀▀███▀▀▀▀▀   ▀▀███▀▀▀     ▀▀███▀▀▀██▄  ███    ███ ███▌ ███       ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   "
-			   "███       ███    ███ ▀███████████   ███    █▄    ███    ██▄ ███    ███ ███  ███       ███    ███   ███    █▄  ▀███████████ "
-			   "███▌    ▄ ███    ███   ███    ███   ███    ███   ███    ███ ███    ███ ███  ███▌    ▄ ███   ▄███   ███    ███   ███    ███ "
-			   "█████▄▄██  ▀██████▀    ███    ███   ██████████ ▄█████████▀  ████████▀  █▀   █████▄▄██ ████████▀    ██████████   ███    ███ "
-			   "▀                      ███    ███                                           ▀                                   ███    ███ ");
-		*/
-
+		printf(" _     ___  ____  _____ ____  _   _ ___ _     ____  _____ ____\n| |   / _ \\|  _ \\| ____| __ )| | | |_ _| |   |  _ \\| ____|  _ \\\n| |  | | | | |_) |  _| |  _ \\| | | || || |   | | | |  _| | |_) |\n| |__| |_| |  _ <| |___| |_) | |_| || || |___| |_| | |___|  _ <\n|_____\\___/|_| \\_\\_____|____/ \\___/|___|_____|____/|_____|_| \\_\\|");
+                                                              
 		int op = 0;
-
-    	system("cls");
-
-		printf("Escolha uma opção: \n"
-			"1 - Personagens\n"
-			"2 - Mundos\n"
+		printf("\n----------------------------------------\n");
+		printf("\n\nEscolha uma opção: \n"
+			"1 - Listar projetos\n"
+			"2 - Abrir projetos\n"
 			"Outro - Sair\n->");
 
         scanf("%d", &op);
@@ -52,96 +42,18 @@ int main()
         
         switch (op){
             case 1:
-                //char_menu();
+                listar_projetos(projetos, &quant_projetos);
                 break;
             case 2:
-                //wld_menu();
+                projeto_aberto = carregar_projeto(projetos, quant_projetos);
                 break;
             default: 
 			rodando = 0;
 			break;
         }
 	}while(rodando==1);
-
-
-	/*****************************************/
-	//			PERSONAGENS
-	/*****************************************/
-
-	int func_char = 1;
-
-	do
-	{
-		/*
-		if (op_char == 1)
-		{
-			fflush(stdin);
-			int index_edit;
-
-			for (int i = 0; i < quant_personagens; i++)
-			{
-				if (nome_personagem[i][0] == NULL)
-				{
-					index_edit = i;
-				}
-				else
-				{
-					index_edit = quant_personagens;
-				}
-			}
-			printf("Criando personagem #%d\nInsira um nome:", index_edit);
-			gets(nome_personagem[index_edit]);
-			fflush(stdin);
-			printf("Insira a descrição: \n");
-			gets(descricao_personagem[index_edit]);
-			fflush(stdin);
-
-			printf("--------------------------\n");
-			printf("%s\n", nome_personagem[index_edit]);
-			printf("--------------------------\n");
-			printf("%s\n", descricao_personagem[index_edit]);
-			printf("Digite qualquer tecla para continuar...");
-			quant_personagens_usados++;
-			getch();
-			system("cls");
-			continue;
-		}
-		else if (op_char == 2)
-		{
-			if (quant_personagens_usados == 0)
-			{
-				printf("Não há personagens cadastrados!");
-				getch();
-				system("cls");
-				continue;
-			}
-
-			for (int i = 0; i < quant_personagens; i++)
-			{
-				if (nome_personagem[i][0] != NULL)
-				{
-					printf("-------------------------\n"
-						   "\t%s\t\t\n"
-						   "-------------------------\n"
-						   "%s\n",
-						   nome_personagem[i], descricao_personagem[i]);
-				}
-			}
-			printf("Digite qualquer tecla para continuar...\n");
-			getch();
-			system("cls");
-		}
-		else if (op_char == 3)
-		{
-			// editar
-		}
-		else
-		{
-			continue;
-		}
-		*/
-	} while (func_char == 1);
-	return 0;
+	return 0; 
+	
 }
 
 
