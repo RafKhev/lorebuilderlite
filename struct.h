@@ -3,31 +3,34 @@
 
 typedef struct _obj {
     char nome[30];
-    char desc[400];
+    char desc[40];
 }Objeto;
 
 typedef struct _local {
     char nome[30];
-    char desc[400];
+    char desc[40];
 }Local;
 
 typedef struct _mundo {
     char nome[30];
-    char desc[400];
-    Local locais_importantes;
-    Objeto objetos_importantes;
+    char desc[40];
+    Local *locais_importantes;
+    int quant_locais;
+    Objeto *objetos_importantes;
+    int quant_objetos;
 }Mundo;
 
 typedef struct _personagem {
     char nome[30];
-    char desc[400];
-    Mundo mundo_origem;
+    char desc[40];
 }Personagem;
 
 typedef struct _projeto {
     char nome_projeto[30];
-    Personagem personagens;
-    Mundo mundos;
+    int quant_personagens;
+    int quant_mundos;
+    Personagem *personagens;
+    Mundo *mundos;
 }Projeto;
 
 #endif

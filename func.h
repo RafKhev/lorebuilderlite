@@ -10,11 +10,78 @@
 #include "struct.h"
 
 #define MAX_NOME_PASTA 256
-
+#define AUMENTA 1
 
 //----------------------------
 //     PROJETO
 //----------------------------
+
+
+void *listar_arquivos(char **path, int *quant, size_t tam, char tipo){
+    DIR *dir;
+    struct dirent *entrada;
+    struct stat statbuf;
+    void **vetor; //Armazena um vetor de structs
+    Mundo *mnd;
+    int index = 0; //Indice do vetor
+
+    //Abre diretorio
+    dir = opendir(*path);
+    if(dir == NULL){
+        printf("Caminho inválido... \nPressione qualquer tecla.");
+        exit(EXIT_FAILURE);
+    }
+
+    vetor = malloc(AUMENTA * sizeof(void*));
+    *quant = 0;
+
+    while((entrada = readdir(dir)) != NULL){
+        char caminho[MAX_NOME_PASTA+8];
+        snprintf(caminho, sizeof(caminho), *path, "%s/%s", *path,entrada->d_name);
+
+        if(stat(caminho, &statbuf) == 0){
+            if(tipo == 'p' || tipo == 'o' || tipo == 'l'){
+                if(S_ISREG(statbuf.st_mode)){
+                    if(index >= AUMENTA){
+                        vetor = realloc(vetor, (index+AUMENTA) * sizeof(void*));
+                    }
+
+                    memcpy((char*)vetor+index*tam, entrada->d_name, 40);
+                    memcpy((char*)vetor+index*tam+40, caminho, 40);
+                    index++;
+                    (*quant)++;
+                }else if(tipo == 'm'){
+                    if(S_ISDIR(statbuf.st_mode) && strcmp(entrada->d_name, ".") !=0 && strcmp(entrada->d_name, "..") != 0){
+                        if(index >= AUMENTA){
+                            vetor = realloc(vetor, (index+AUMENTA) * sizeof(void*));
+                        }
+
+                        mnd = malloc(sizeof(Mundo));
+            
+                        strcpy(mnd->nome, entrada->d_name);
+                        strcpy(mnd->desc, caminho);
+
+                        char caminho_objetos[MAX_NOME_PASTA+8];
+                        sprintf(caminho_objetos, "%s/Objetos", caminho);
+
+                        mnd->objetos_importantes = (Objeto *)listar_arquivos(&caminho_objetos, &mnd->quant_objetos, sizeof(Objeto), 'o');
+
+                        char caminho_locais[MAX_NOME_PASTA+8];
+                        sprintf(caminho_locais, "%s/Locais", caminho);
+
+                        mnd->locais_importantes = (Local *)listar_arquivos(&caminho_locais, &mnd->quant_locais, sizeof(Local), 'o');
+                        vetor[index] = mnd;
+                        index++;
+                        (*quant)++;
+                    }
+                }
+            }
+        }
+    }
+
+    closedir(dir);
+    return vetor;
+}
 
 void listar_projetos(char projetos[][MAX_NOME_PASTA], int *quant_projetos){
     DIR *dir;
@@ -63,8 +130,13 @@ Projeto carregar_projeto(char projetos[][MAX_NOME_PASTA], int quant_projetos){
     escolha--;
 
     strcpy(projetoSelecionado.nome_projeto, projetos[escolha]);
+    char caminho[50];
 
-    //Funções de carregar projeto vai aqui
+    sprintf(caminho, "%s/Personagens", projetoSelecionado.nome_projeto);
+    projetoSelecionado.mundos = listar_arquivos(&caminho, &projetoSelecionado.quant_mundos, sizeof(Mundo), 'm');
+
+    sprintf(caminho, "%s/Personagens", projetoSelecionado.nome_projeto);
+    projetoSelecionado.personagens = listar_arquivos(&caminho, &projetoSelecionado.quant_personagens, sizeof(Personagem), 'p');
 
     return projetoSelecionado;
 
@@ -77,7 +149,7 @@ Projeto carregar_projeto(char projetos[][MAX_NOME_PASTA], int quant_projetos){
 void menu_projeto(Projeto *proj){
     printf("Menu de projetos...");
     getch();
-    sys("cls");
+    //sys("cls");
     //Ir para menu de personagem/menu de mundo/retornar
 }  
 
