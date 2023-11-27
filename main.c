@@ -25,7 +25,8 @@ int main()
 	int quant_projetos = 0;
 
 	Projeto projeto_aberto;
-	
+	int teste = 1;
+
 	do{
 		printf(" _     ___  ____  _____ ____  _   _ ___ _     ____  _____ ____\n| |   / _ \\|  _ \\| ____| __ )| | | |_ _| |   |  _ \\| ____|  _ \\\n| |  | | | | |_) |  _| |  _ \\| | | || || |   | | | |  _| | |_) |\n| |__| |_| |  _ <| |___| |_) | |_| || || |___| |_| | |___|  _ <\n|_____\\___/|_| \\_\\_____|____/ \\___/|___|_____|____/|_____|_| \\_\\|");
                                                               
@@ -36,7 +37,8 @@ int main()
 			"2 - Abrir projetos\n"
 			"Outro - Sair\n->");
 
-        scanf("%d", &op);
+			scanf("%d", &op);
+		
         printf("\n-------------------------\n");
         
         switch (op){
@@ -44,7 +46,7 @@ int main()
                 listar_projetos(projetos, &quant_projetos);
                 break;
             case 2:
-                projeto_aberto = carregar_projeto(projetos, quant_projetos);
+                projeto_aberto = carregar_projeto(projetos);
 				menu_projeto(&projeto_aberto);
                 break;
             default: 
