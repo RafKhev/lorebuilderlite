@@ -124,7 +124,7 @@ void listar_projetos(char projetos[][MAX_NOME_PASTA], int *quant_projetos){
     system("cls");
 
 }
-
+/*
 Projeto carregar_projeto(char projetos[][MAX_NOME_PASTA], int quant_projetos){
     int escolha;
     Projeto projetoSelecionado;
@@ -145,17 +145,20 @@ Projeto carregar_projeto(char projetos[][MAX_NOME_PASTA], int quant_projetos){
     return projetoSelecionado;
 
 }
+*/
 
 void ler_entre(char *nome_arquivo, char *inicio, char *fim){
     FILE *arquivo;
     
-    if((arquivo == fopen(nome_arquivo, "r")) == NULL){
+    arquivo = fopen(nome_arquivo, "r");
+    if(arquivo == NULL){
         printf("Não foi possível abrir o arquivo");
         exit(EXIT_FAILURE);
     }
+    
 
-    linha[100];
-    encontrado = 0;
+    char linha[100];
+    int encontrado = 0;
     while(fgets(linha, 100, arquivo) != NULL){
         if(encontrado == 0){
             if(strstr(linha, inicio) != NULL){
@@ -176,67 +179,73 @@ void ler_entre(char *nome_arquivo, char *inicio, char *fim){
 
 }
 
-Projeto criar_projeto(char *nome_projeto){
+Projeto criar_projeto(){
+
     printf("CRIANDO NOVO PROJETO");
 
     Projeto proj;
-    char temp[40], select; 
+    char nome[40], nome_completo[45], select; 
     printf("Digite o nome do projeto: ");
-    scanf("%s", &temp);
-    strcpy(proj.nome_projeto, temp);
+    scanf("%s", &nome);
+    strcpy(proj.nome_projeto, nome);
+    /*
     printf("Deseja criar agora? S/N\n");
     while(select != "S" || select != "s" || select != "N" || select != "n"){
         scanf(" %c", &select);
     }
-
-    if()
+    */
 
     FILE *arquivo;
 
-    if((arquivo == fopen(nome_arquivo, "w")) == NULL){
+    char texto[] = "PROJETO\n\n"
+                    "ENDPROJ\n\n"
+                    "PERSONAGEM\n\n"
+                    "ENDPERSONAGEM\n\n"
+                    "MUNDO\n\n"
+                    "ENDMUNDO\n\n"
+                    "LOCAL\n\n"
+                    "ENDLOCAL\n\n"
+                    "OBJETO\n\n"
+                    "ENDOBJETO\n\n";
+
+    strcpy(nome_completo, nome);
+    strcat(nome_completo, ".lbp");
+
+    arquivo = fopen(nome_completo, "w");
+    if(arquivo == NULL){
         printf("Não foi possível abrir o arquivo");
         exit(EXIT_FAILURE);
     }
 
-    fprintf(arquivo,"PROJETO\n"
-                    "ENDPROJ\n"
-                    "PERSONAGEM\n"
-                    "ENDPERSONAGEM\n"
-                    "MUNDO\n"
-                    "ENDMUNDO\n"
-                    "LOCAL\n"
-                    "ENDLOCAL\n"
-                    "OBJETO\n"
-                    "ENDOBJETO\n");
-
+    fwrite(texto,1,sizeof(texto),arquivo);
+    fclose(arquivo);
     printf("Projeto criado e carregado com sucesso!");
-    return Projeto;
+    return proj;
 }
 
-void 
 
 //----------------------------
 //     PERSONAGEM
 //----------------------------
 
-void *criar_personagem(){
+
+void criar_personagem(){
     printf("Digite o nome do personagem: ");
     char nome[40];
     scanf("%s", &nome);
 
-    printf("Insira a informação do personagem:")
-    fgets()
+    printf("Insira a informação do personagem:");
 
-    Personagem *novo_personagem = (personagem*)malloc(sizeof(personagem));
+    Personagem *novo = (Personagem*)malloc(sizeof(Personagem));
 
     if(novo == NULL){
         printf("Erro na alocação de memória");
         exit(1);
     }
 
-    strcpy(novo_personagem->nome, nome);
-    novo_personagem->desc = '\0';
-    novo_personagem->proximo_personagem = NULL;
+    strcpy(novo->nome, nome);
+    strcpy(novo->desc, '\0');
+    novo->proximo_personagem = NULL;
 }
 
 void adicionar_personagem(Personagem **lista, Personagem *novo){
@@ -276,4 +285,4 @@ void wld_menu(){
         //Criar local/Visualizar local
 }
 
-#endif 
+#endif
